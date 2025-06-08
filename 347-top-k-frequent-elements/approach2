@@ -1,0 +1,23 @@
+//another approach using priority queue
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer,Integer> mp=new HashMap<>();
+        for(int i:nums){
+            mp.put(i,mp.getOrDefault(i,0)+1);
+        } 
+        PriorityQueue<Integer> p=new PriorityQueue<>((a,b)->mp.get(a)-mp.get(b));
+        for(int num:mp.keySet()){
+            p.offer(num);
+            if(p.size()>k){
+                p.poll();
+            }
+        }
+        int arr[]=new int[k];
+        int x=0;
+        for(Integer i:p){
+            arr[x]=i;
+            x++;
+        }
+        return arr;
+    }
+}
