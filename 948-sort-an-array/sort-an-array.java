@@ -1,43 +1,27 @@
 class Solution {
+    public void heapify(int []arr,int n,int i){
+        int largest=i;
+        int r=2*i+2;
+        int l=2*i+1;
+        if(l<n&&arr[l]>arr[largest]) largest=l;
+        if(r<n && arr[r]>arr[largest]  ) largest=r;
+        if(largest!=i){
+            int temp=arr[largest];
+            arr[largest]=arr[i];
+            arr[i]=temp;
+            heapify(arr,n,largest);
+        }
+    }
     public int[] sortArray(int[] nums) {
-        quicksort(nums, 0, nums.length - 1);
+        for(int i=nums.length/2-1;i>=0;i--){
+            heapify(nums,nums.length,i);
+        }
+        for(int i=nums.length-1;i>=0;i--){
+            int temp=nums[i];
+            nums[i]=nums[0];
+            nums[0]=temp;
+            heapify(nums,i,0);
+        }
         return nums;
-    }
-
-    private void quicksort(int[] arr, int l, int r) {
-        if (l < r) {
-            int p = partition(arr, l, r);
-            quicksort(arr, l, p - 1);
-            quicksort(arr, p + 1, r);
-        }
-    }
-
-    private int partition(int[] arr, int l, int r) {
-        int pivotIndex = l + (r - l) / 2;
-        int pivot = arr[pivotIndex];
-        swap(arr, pivotIndex, l);  // move pivot to start
-
-        int i = l + 1;
-        int j = r;
-
-        while (i <= j) {
-            while (i <= r && arr[i] <= pivot) i++;
-            while (j >= l && arr[j] > pivot) j--;
-
-            if (i < j) {
-                swap(arr, i, j);
-            }
-        }
-
-        swap(arr, l, j);  // place pivot at correct position
-        return j;
-    }
-
-    private void swap(int[] arr, int i, int j) {
-        if (i != j) {
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
     }
 }
