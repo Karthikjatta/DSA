@@ -32,9 +32,8 @@ class Solution {
                 q.offer(curr.right);
             }
         }
-        ans.add(new ArrayList<>(temp));
+        ans.add(0,temp);
     }
-    Collections.reverse(ans);
     return ans;
     }
 }
