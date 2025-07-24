@@ -4,8 +4,8 @@ class Solution {
         String ans="";
         for(int i=0;i<k;i++){
             ans+=str[i];
-            ans+=" ";
+            if(i!=k-1) ans+=" ";
         }
-        return ans.trim();
+        return ans;
     }
 }
