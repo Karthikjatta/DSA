@@ -1,12 +1,20 @@
 class Solution {
     public String reverseWords(String s) {
-        String[] words = s.trim().split("\\s+");
-        StringBuilder sb = new StringBuilder();
-        for (int i = words.length - 1; i >= 0; i--) {
-            sb.append(words[i]);
-            if (i != 0) sb.append(" "); 
+        s=s.trim();
+        String fa="";
+        String a="";
+        for(int i=s.length()-1;i>=0;i--){
+            char c=s.charAt(i);
+            if(c==' '){
+                fa+=a+" "; 
+                a="";
+                while(s.charAt(i-1)==' ') i--;
+            }
+            else{
+                a=c+a;
+            }
         }
-
-        return sb.toString();
+        fa+=a;
+        return fa;
     }
 }
