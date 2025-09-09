@@ -1,33 +1,22 @@
 class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
-        Arrays.sort(nums1);
-        Arrays.sort(nums2);
-        int i=0,j=0;
-        int ans[]=new int[1000];
-        int x=0;
-        while(i<nums1.length&&j<nums2.length){
-            if(nums1[i]==nums2[j]){
-                if(x==0||(x>0 && nums1[i]!=ans[x-1])){
-                ans[x++]=nums1[i];
-                i++;
-                j++;
-                }
-                else{
-                    i++;
-                    j++;
-                }
-            }
-            else if(nums1[i]<nums2[j]){
-                i++;
-            }
-            else {
-                j++;
-            }
+      int freq[]=new int[1001];
+      int ans[]=new int[nums1.length];
+      int j=0;
+      for(int i=0;i<nums1.length;i++){
+        freq[nums1[i]]+=1;
+      }  
+      for(int i=0;i<nums2.length;i++){
+        if(freq[nums2[i]]>0){
+            ans[j++]=nums2[i];
+            freq[nums2[i]]=0;
         }
-        int temp[]=new int[x];
-        for(int k=0;k<x;k++){
-            temp[k]=ans[k];
-        }
-        return temp;
+      }
+      int temp[]=new int[j];
+      for(int i=0;i<j;i++)
+      {
+        temp[i]=ans[i];
+      }
+      return temp;
     }
 }
