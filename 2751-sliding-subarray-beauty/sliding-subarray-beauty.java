@@ -1,33 +1,42 @@
 class Solution {
-    public int findXth(TreeMap<Integer, Integer> map, int x) {
-            int count=0;
-        for(int i:map.keySet()){
-            count+=map.get(i);
-            if(count>=x) return i;
-        }
-        return 0;
-    }
+      int getIndex(int num){ 
+            return num + 50;
+             }
     public int[] getSubarrayBeauty(int[] nums, int k, int x) {
-        TreeMap<Integer,Integer> mp=new TreeMap<>();
-        int[] ans=new int[nums.length-k+1];
-        for(int i=0;i<k;i++){
-            if(nums[i]<0)mp.put(nums[i],mp.getOrDefault(nums[i],0)+1);
+        int n = nums.length;
+        int[] ans = new int[n - k + 1];
+        int[] freq = new int[101]; // For numbers -50 to 50
+
+        // Function to get index in freq array
+      
+
+        // Build first window
+        for (int i = 0; i < k; i++) {
+            if (nums[i] < 0) freq[nums[i] + 50]++;
         }
-        int i=0;
-        int j=k;
-        while(j<nums.length){
-            ans[i]=findXth(mp,x);
-            if(nums[i]<0){
-                mp.put(nums[i],mp.get(nums[i])-1);
-                if(mp.get(nums[i])==0) mp.remove(nums[i]);
+
+        // Helper to find x-th smallest negative
+        java.util.function.IntSupplier findXth = () -> {
+            int count = 0;
+            for (int i = 0; i < 50; i++) { // only negatives (-50 to -1)
+                count += freq[i];
+                if (count >= x) return i - 50;
             }
-            if(nums[j]<0){
-                mp.put(nums[j],mp.getOrDefault(nums[j],0)+1);
-            }
-            i++;
-            j++;
+            return 0;
+        };
+
+        // Slide the window
+        for (int i = k; i <= n; i++) {
+            ans[i - k] = findXth.getAsInt();
+
+            if (i == n) break;
+
+            // Remove outgoing
+            if (nums[i - k] < 0) freq[nums[i - k] + 50]--;
+            // Add incoming
+            if (nums[i] < 0) freq[nums[i] + 50]++;
         }
-        ans[ans.length-1]=findXth(mp,x);
+
         return ans;
     }
 }
