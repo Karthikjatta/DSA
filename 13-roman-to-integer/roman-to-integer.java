@@ -1,37 +1,20 @@
 class Solution {
     public int romanToInt(String s) {
-        int[] arr=new int[s.length()];
+        HashMap<Character,Integer> mp=new HashMap<>();
+        mp.put('I',1);
+        mp.put('V',5);
+        mp.put('X',10);
+        mp.put('L',50);
+        mp.put('C',100);
+        mp.put('D',500);
+        mp.put('M',1000);
+        int ans=0;
         for(int i=0;i<s.length();i++){
-            if(s.charAt(i)=='I'){
-                arr[i]=1;
+            ans+=mp.get(s.charAt(i));
+            if(i>0 && mp.get(s.charAt(i-1))<mp.get(s.charAt(i))){
+                ans-=2*mp.get(s.charAt(i-1));
             }
-            else if(s.charAt(i)=='V'){
-                arr[i]=5;
-            }
-            else if(s.charAt(i)=='X'){
-                arr[i]=10;
-            }
-            else if(s.charAt(i)=='L'){
-                arr[i]=50;
-            }
-            else if(s.charAt(i)=='C'){
-                arr[i]=100;
-            }
-            else if(s.charAt(i)=='D')
-            {
-                arr[i]=500;
-            }
-            else if(s.charAt(i)=='M'){
-                arr[i]=1000;
-            }
-       } 
-       int ans=0;
-       for(int i=0;i<arr.length;i++){
-        ans+=arr[i];
-        if(i>0 && arr[i-1]<arr[i]){
-            ans=ans-(2*arr[i-1]);
         }
-       }
-       return ans;
+        return ans;
     }
 }
